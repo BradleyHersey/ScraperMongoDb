@@ -9,6 +9,7 @@ const PORT = process.env.PORT || 3100;
 const app = express();
 // express router
 const router = express.Router();
+require("./config/routes")(router);
 // public folder as a static directory
 app.use(express.static(`${__dirname}/public`));
 //connect handlebars to express
@@ -32,6 +33,12 @@ mongoose.connect(db, (error) => {
         console.log("You are connected to mongoose Dude!!!")
     }
 });
+
+
+
+require('./config/routes')(app)
+
+
 //listen on the port
 app.listen(PORT, () => {
     console.log(`Listening on port: ${PORT}`);
