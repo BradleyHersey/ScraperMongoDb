@@ -16,5 +16,6 @@ const headlineSchema = new Schema({
         default: false
     }
 });
+console.log("4");
 const Headline = mongoose.model("Headline", headlineSchema);
 module.exports = Headline;

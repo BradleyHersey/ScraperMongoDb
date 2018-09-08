@@ -2,8 +2,11 @@ const scrape = require("../scripts/scrape");
 const makeDate = require("../scripts/data");
 const Headline = require("../models/Headline");
 module.exports = {
-    fetch: cb => {
-        scrape(data => {
+    fetch: (req,res) => {
+        console.log("INSIDE CONTROLLER FETCH --------------------------------")
+       scrape()
+       .then( (data)=> {
+            console.log("inside scrape!!!!!!!!!!!!!!!!!!!! ON CONTROLLER ---------------------------------")
             const results = data;
             for (let i = 0; i < results.lenght; ++i) {
                 results[i].data = makeDate();
@@ -14,7 +17,7 @@ module.exports = {
             }, (err, docs) => {
                 cb(err, docs);
             });
-        });
+        });console.log("2");
     },
     delete: (query, cb) => {
         Headline.remove(query, cb);

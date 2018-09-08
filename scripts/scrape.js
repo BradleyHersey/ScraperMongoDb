@@ -1,28 +1,91 @@
 const request = require("request");
+const axios = require('axios')
 const cheerio = require("cheerio");
-const scrape = cd => {
-    request('https://www.animenewsnetwork.com/', (err, res, body) => {
-        const $ = cheerio.load(body);
-        let results = [];
-        $(".herald box reviews").each((i, element) => {
-            let title = $(this).children("h3 t-explicit").text().trim();
-            let story = $(this).children(".intro").text().trim();
+const scrape = ()=> {
+    return axios.get('https://www.animenewsnetwork.com/').then((html) => {
 
-            if (title && story) {
-                const titleNeat = title.replace(/(\r\n|\n|\r|\t|\s+)/gm, "").trim();
-                const storyNeat = story.replace(/(\r\n|\n|\r|\t|\s+)/gm, "").trim();
+        const $ = cheerio.load(html);
+        let results = [];
+        $("#mainfeed").each((i, element) => {
+          console.log('im in the function')
+            let headline = $(this).children("h3 t-explicit").text().trim();
+            let summary = $(this).children(".full").text().trim();
+console.log(element);
+console.log(headline);
+console.log(summary);
+            if (headline &&summary) {
+                const headlineNeat = headline.replace(/(\r\n|\n|\r|\t|\s+)/gm, "").trim();
+                const summaryNeat = summary.replace(/(\r\n|\n|\r|\t|\s+)/gm, "").trim();
                 const dataAdd = {
-                    headline: titleNeat,
-                    summary: storyNeat
+                    headline: headlineNeat,
+                    summary: summaryNeat
                 };
                 results.push(dataAdd);
             }
+           
         });
-        cb(results);
+        console.log("RESULTS------------------", results)
+        return results;    
     });
 
 
 };
-module.exports = scrape;
+// var axios = require("axios");
+// var cheerio = require("cheerio");
+
+// // This function will scrape the NYTimes website
+// var scrape = function() {
+//   // Scrape the NYTimes website
+//   return axios.get("http://www.nytimes.com").then(function(res) {
+//     var $ = cheerio.load(res.data);
+//     // Make an empty array to save our article info
+//     var articles = [];
+
+//     // Now, find and loop through each element that has the "css-180b3ld" class
+//     // (i.e, the section holding the articles)
+//     $("article.css-180b3ld").each(function(i, element) {
+//       // In each article section, we grab the child with the class story-heading
+
+//       // Then we grab the inner text of the this element and store it
+//       // to the head variable. This is the article headline
+//       var head = $(this)
+//         .find("h2")
+//         .text()
+//         .trim();
+
+//       // Grab the URL of the article
+//       var url = $(this)
+//         .find("a")
+//         .attr("href");
+
+//       // Then we grab any children with the class of summary and then grab it's inner text
+//       // We store this to the sum variable. This is the article summary
+//       var sum = $(this)
+//         .find("p")
+//         .text()
+//         .trim();
+
+//       // So long as our headline and sum and url aren't empty or undefined, do the following
+//       if (head && sum && url) {
+//         // This section uses regular expressions and the trim function to tidy our headlines and summaries
+//         // We're removing extra lines, extra spacing, extra tabs, etc.. to increase to typographical cleanliness.
+//         var headNeat = head.replace(/(\r\n|\n|\r|\t|\s+)/gm, " ").trim();
+//         var sumNeat = sum.replace(/(\r\n|\n|\r|\t|\s+)/gm, " ").trim();
+
+//         // Initialize an object we will push to the articles array
+
+//         var dataToAdd = {
+//           headline: headNeat,
+//           summary: sumNeat,
+//           url: "https://www.nytimes.com" + url
+//         };
+
+//         articles.push(dataToAdd);
+//       }
+//     });
+//     return articles;
+//   });
+// }
+ module.exports = scrape;
 
 //console.log("SCRAPED DATA: ", $)
