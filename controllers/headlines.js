@@ -2,7 +2,7 @@ const scrape = require("../scripts/scrape");
 const makeDate = require("../scripts/data");
 const Headline = require("../models/Headline");
 module.exports = {
-    fetch: (req,res) => {
+    fetch: (cb) => {
         console.log("INSIDE CONTROLLER FETCH --------------------------------")
        scrape()
        .then( (data)=> {
@@ -11,21 +11,24 @@ module.exports = {
             for (let i = 0; i < results.lenght; ++i) {
                 results[i].data = makeDate();
                 results[i].saved = false;
-            }
+            }console.log("2");
             Headline.collection.insertMany(results, {
                 ordered: false
-            }, (err, docs) => {
-                cb(err, docs);
+            }, 
+            (docs) => {
+                cb(docs);
             });
-        });console.log("2");
+        });
     },
     delete: (query, cb) => {
-        Headline.remove(query, cb);
+        Headline.remove(query, cb);console.log("delete");
     },
+    
     get: (query, cb) => {
-        Headline.find(query).sort({
+        Headline.find({saved: null}).sort({
             _id: -1
         }).exec((err, doc) => {
+            console.log('got data')
             cb(doc);
         });
     },

@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const expressHandlebars = require("express-handlebars");
 const bodyParser = require("body-parser");
 //port 
-const PORT = process.env.PORT ||8080;
+const PORT = process.env.PORT ||3335;
 //express app
 const app = express();
 // express router

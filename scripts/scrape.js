@@ -2,25 +2,30 @@ const request = require("request");
 const axios = require('axios')
 const cheerio = require("cheerio");
 const scrape = ()=> {
-    return axios.get('https://www.animenewsnetwork.com/').then((html) => {
+    return axios.get('https://www.animenewsnetwork.com/').then((res) => {
 
-        const $ = cheerio.load(html);
+        const $ = cheerio.load(res.data);
         let results = [];
-        $("#mainfeed").each((i, element) => {
+        $(".wrap").each(function(i, element) {
           console.log('im in the function')
-            let headline = $(this).children("h3 t-explicit").text().trim();
-            let summary = $(this).children(".full").text().trim();
-console.log(element);
-console.log(headline);
-console.log(summary);
-            if (headline &&summary) {
+      //     var headline = $(this)
+      //  .find("h3 t-explicit")
+      //  .text()
+      //  .trim();
+      console.log($(this).find("div").html());
+
+           const headline = $(this).find("div h3 a").text().trim();
+           const summary = $(this).find("div .preview .intro .full ").text().trim();
+           const url = $(this).find("a") .attr("href");
+            if (headline&&summary&&url) {
                 const headlineNeat = headline.replace(/(\r\n|\n|\r|\t|\s+)/gm, "").trim();
                 const summaryNeat = summary.replace(/(\r\n|\n|\r|\t|\s+)/gm, "").trim();
-                const dataAdd = {
+                const dataToAdd = {
                     headline: headlineNeat,
-                    summary: summaryNeat
+                    summary: summaryNeat,
+                    url: "https://www.animenewsnetwork.com/" + url
                 };
-                results.push(dataAdd);
+                results.push(dataToAdd);
             }
            
         });

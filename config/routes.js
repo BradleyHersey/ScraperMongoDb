@@ -26,16 +26,19 @@ module.exports = app => {
         });
     });
     app.get("/api/headlines", (req, res) => {
-        const query = {};
+        let query = { saved: false };
         if (req.query.saved) {
-            query = req.query;
+            query = {
+                saved: true
+            };
         }
+        console.log('query is', query)
         headlinesController.get(query, data => {
             res.json(data);
         });
     });
     app.delete("/api/headlines/:id", (req, res) => {
-        const query = {};
+        let query = {};
         query._id = req.params.id;
         headlinesController.delete(query, (err, data) => {
             res.json(data);
@@ -47,7 +50,7 @@ module.exports = app => {
         });
     });
     app.get("/api/notes/:headline_id?", (err, data) => {
-        const query = {};
+        let query = {};
         if (req.params.headline_id) {
             query._id = req.params.headline_id;
         }

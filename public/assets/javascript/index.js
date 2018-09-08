@@ -1,10 +1,12 @@
 $(document).ready(() => {
    
+    const articleContainer = $(".article-container");
 
     const initPage = () => {
         articleContainer.empty();
         $.get("/api/headlines?saved=false")
             .then(data => {
+                console.log('got data from server')
                 if (data && data.length) {
                     renderArticles(data);
                 } else {
@@ -32,11 +34,14 @@ $(document).ready(() => {
             "</a>",
             "</h2>",
             "</div>",
+            "<div class='panel-link'>",
+            article.url,
+            "</div>",
             "<div class='panel-body'>",
             article.summary,
             "</div>",
             "</div>"
-        ].join(""));
+        ].join('      '));
         panel.data("_id", article._id);
         return panel;
     }
@@ -52,11 +57,13 @@ $(document).ready(() => {
             "<h4><a>href='/saved'>Saved Articles</a></h4>",
             "</div>",
             "</div>"
-        ].join(""));
+        ].join('  '));
         articleContainer.append(emptyAlert);
     }
 
-    const handleArticleSave = () => {
+    const handleArticleSave = (event) => {
+        event.preventDefault();
+
         const articletToSave = $(this).parents(".panel").data();
         articletToSave.saved = true;
         $.ajax({
@@ -70,16 +77,19 @@ $(document).ready(() => {
         });
     }
    
-    const handleArticleScrape = () => {
+    const handleArticleScrape = (event) => {
+        event.preventDefault();
         $.get("/api/fetch")
             .then(data => {
+                console.log('data after fetch')
                 initPage();
-                bootbox.alert(`<h3 class='text-center m-top-80'>${data.message}</h3>`);
+                bootbox.alert(`<h3 class='text-center m-top-80'> ${data.message} </h3>`);
             });
-            const articleContainer = $(".article-container");
-            $(document).on("click", "btn.save", handleArticleSave);
-            $(document).on("click", ".scrape-new", handleArticleScrape);
-        
-            initPage();
+
     }
-});console.log("6");
+
+    $(document).on("click", "btn.save", handleArticleSave);
+    $(document).on("click", ".scrape-new", handleArticleScrape);
+
+    initPage();
+});
