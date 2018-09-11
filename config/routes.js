@@ -19,7 +19,7 @@ module.exports = app => {
                 });
             } else {
                 res.json({
-                    message: `ADDED ${docs.insertedCount} New News!!`
+                    message: "ADDED"+docs.insertedCount+" New News!!"
                 });
             }
         });
@@ -59,4 +59,5 @@ module.exports = app => {
             res.json(data);
         });
     });
+    console.log("1");
 }

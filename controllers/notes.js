@@ -1,5 +1,5 @@
 const Note = require("../models/Note");
-const makeDate = require("../scripts/date");
+const makeDate = require("../scripts/data");
 module.exports = {
     get: (data, cb) => {
         Note.find({
@@ -19,7 +19,7 @@ module.exports = {
                 console.log(doc);
                 cb(doc);
             }
-        });
+        });console.log("3");
     },
     delete: (data, cb) => {
         Note.remove({

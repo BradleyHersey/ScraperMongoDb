@@ -6,5 +6,5 @@ const makeDate = () => {
     formattedDate += d.getDate() + 1 + "_";
     formattedDate += d.getFullYear();
     return formattedDate;
-};
+};console.log("8");
 module.exports = makeDate;

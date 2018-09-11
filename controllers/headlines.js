@@ -14,7 +14,7 @@ module.exports = {
             }, (err, docs) => {
                 cb(err, docs);
             });
-        });
+        });console.log("2");
     },
     delete: (query, cb) => {
         Headline.remove(query, cb);

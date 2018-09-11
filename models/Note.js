@@ -8,5 +8,6 @@ const noteSchema = new Schema({
     data: String,
     noteText: String
 });
+console.log("5");
 const Note = mongoose.model("Note", noteSchema);
 module.exports = Note;
