@@ -5,12 +5,9 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "start": "node server.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/BradleyHersey/ScraperMongoDb.git"
-  },
+
   "author": "",
   "license": "ISC",
   "bugs": {
@@ -27,4 +24,5 @@
     "mongoose": "^5.2.12",
     "request": "^2.88.0"
   }
+ 
 }
