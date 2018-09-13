@@ -1,0 +1,38 @@
+body{
+   background-image: url("../images/steam.jpg");
+   background-size: cover;
+   background-repeat: no-repeat;
+   background-attachment: fixed;
+}
+.panel{
+    color: white;
+    border: 2px double white;
+    
+}
+.jumbotron{
+    background-image: url('../images/gaminggirl.jpg');
+    color: white;
+   
+}
+.navbar{
+    color: white;
+}
+.btn{
+    -webkit-animation-name: bttn;
+  -webkit-animation-duration: 2s;
+  -webkit-animation-iteration-count: infinite;
+}
+@-webkit-keyframes bttn {
+        from {
+          border-color: #9a0202;
+          -webkit-box-shadow: 0 0 20px rgb(255, 157, 0);
+        }
+        50% {
+          border-color: #fffb00;
+          -webkit-box-shadow: 0 0 40px #ff0000;
+        }
+        to {
+          border-color: #e5ff00;
+          -webkit-box-shadow: 0 0 20px rgb(179, 255, 0);
+        }
+      }

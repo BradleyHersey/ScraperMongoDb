@@ -4,14 +4,16 @@ const mongoose = require("mongoose");
 const expressHandlebars = require("express-handlebars");
 const bodyParser = require("body-parser");
 //port 
-const PORT = process.env.PORT || 3100;
+const PORT = process.env.PORT ||3335;
 //express app
 const app = express();
 // express router
 const router = express.Router();
 require("./config/routes")(router);
 // public folder as a static directory
-app.use(express.static(`${__dirname}/public`));
+//  app.use(express.static("/public/assets/javascript/index.js"));
+// app.use(express.static(`/public${__dirname}`));
+app.use(express.static('public'));
 //connect handlebars to express
 app.engine("handlebars", expressHandlebars({
     defaultLayout: "main"

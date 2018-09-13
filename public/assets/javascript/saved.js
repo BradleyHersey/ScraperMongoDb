@@ -16,7 +16,7 @@ $(document).ready(() => {
         });
     }
     const renderArticles = (articles) => {
-        const articlePanels = [];
+        let articlePanels = [];
         for (let i = 0; i < articles.length; i++) {
             articlePanels.push(createPanel(articles[i]));
         }
@@ -24,10 +24,10 @@ $(document).ready(() => {
     }
 
     const createPanel = (article) => {
-        const panel = $(["<div class='panel panel-default'>",
+        let panel = $(["<div class='panel panel-default'>",
             "<div class='panel-heading'>",
             "<h2>",
-            article.title,
+            article.headline,
             "<a class='btn btn-danger delete'>",
             "Delete Saved Article",
             "</a>",
@@ -35,7 +35,7 @@ $(document).ready(() => {
             "</h2>",
             "</div>",
             "<div class='panel-body'>",
-            article.story,
+            article.summary,
             "</div>",
             "</div>"
         ].join(""));
@@ -43,7 +43,7 @@ $(document).ready(() => {
         return panel;
     }
     const renderEmpty = () => {
-        const emptyAlert = $(["<div class='alert alert-warning text-center'>",
+        let emptyAlert = $(["<div class='alert alert-warning text-center'>",
             "<h4>Nothing New! . Try again later!</h4>",
             "</div>",
             "<div class ='panel panel-default'>",
@@ -59,8 +59,8 @@ $(document).ready(() => {
         articleContainer.append(emptyAlert);
     }
     const renderNotesList = (data) => {
-        const notesToRender = [];
-        const currentNote;
+        let notesToRender = [];
+        let currentNote;
         if (!data.notes.length) {
             currentNote = [
                 "<li class='list-group-item'>",
@@ -83,7 +83,7 @@ $(document).ready(() => {
         $(".note-container").append(notesToRender);
     }
     const handleArticleDelete = () => {
-        const articleToDelete = $(this).parents(".panel").data();
+        let articleToDelete = $(this).parents(".panel").data();
         $.ajax({
             method: "DELETE",
             url: "/api/headlines/" + articleToDelete._id
@@ -94,9 +94,9 @@ $(document).ready(() => {
         });
     }
     const handleArticleNotes = () => {
-        const currentArticle = $(this).parents(".panel").data();
+        let currentArticle = $(this).parents(".panel").data();
         $.get("/api/notes/" + currentArticle._id).then(data => {
-            const modalText = [
+            let modalText = [
                 "<div class='container-fluid text-center'>",
                 "<h3>Notes for Article:",
                 currentArticle._id,
@@ -111,7 +111,7 @@ $(document).ready(() => {
                 message: modalText,
                 closeButton: true
             });
-            const noteData = {
+            let noteData = {
                 _id: currentArticle._id,
                 notes: data || []
             };
@@ -121,8 +121,8 @@ $(document).ready(() => {
 
     }
     const handleNoteSave = () => {
-        const noteData;
-        const newNote = $(".bootbox-body textarea").val().trim();
+        let noteData;
+        let newNote = $(".bootbox-body textarea").val().trim();
         if (newNote) {
             noteData = {
                 _id: $(this).data("article")._id,
@@ -135,7 +135,7 @@ $(document).ready(() => {
         }
     }
     const handleNoteDelete = () => {
-        const noteToDelete = $(this).data("_id");
+        let noteToDelete = $(this).data("_id");
         $.ajax({
             url: "/api/notes/" + noteToDelete,
             method: "DELETE"
